@@ -13,7 +13,7 @@
     include "../util.php";
 
     $conn = conecta();  // pra usar no ecommerce
-
+    $id = $_SESSION['id'];
     if (isset($_POST['nome']) and $_POST['nome'] <> "") {
         $varSQL = " SELECT * FROM usuarios
                         where nome LIKE :paramNome
