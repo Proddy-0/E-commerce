@@ -4,35 +4,86 @@
     <?php
         include "../util.php";
         $conn = conecta();
-        $email = $_GET['email']; // recupera o email
-        $varSQL = "SELECT * FROM usuarios WHERE email = :email";
+        $id = $_GET['id'];
+
+        $varSQL = "SELECT *
+                FROM usuarios
+                WHERE id_usuario = :id";
+
         $select = $conn->prepare($varSQL);
-        $select->bindParam(':email', $email);
+        $select->bindParam(':id', $id);
         $select->execute();
-        $linha = $select->fetch(); // não tem while, é 1 linha
+
+        $linha = $select->fetch();
+
+        if (!$linha) {
+            echo "Usuário não encontrado!";
+            exit;
+        }
 
         $nome = $linha['nome'];
         $telefone = $linha['telefone'];
         $email = $linha['email'];
+
     ?>
 
-    <form action='updateCursos.php' method='post'
+    <form action="updateUsuario.php"
+        method="post"
         enctype="multipart/form-data">
+        <input type="hidden"
+            name="id_usuario"
+            value="<?= $id ?>">
         Nome<br>
-        <input type='text' name='nome' value='<?= $nome ?>'><br>
+        <input type="text"
+            name="nome"
+            value="<?= htmlspecialchars($nome) ?>"
+            required>
+        <br><br>
+
         Email<br>
-        <input type='email'   name='email'    value='<?= $email ?>'><br>
+        <input type="email"
+            name="email"
+            value="<?= htmlspecialchars($email) ?>"
+            required>
+        <br><br>
+
         Telefone<br>
-        <input type='text'   name='telefone' value='<?= $telefone ?>'><br>
+        <input type="text"
+            name="telefone"
+            value="<?= htmlspecialchars($telefone) ?>">
+        <br><br>
 
         <?php
-             if ( file_exists("imagens/usuarios/$email.jpg") )
-                echo "<img src='imagens/usuarios/$email.jpg' height=40><br>";
+
+        $imagem = "";
+
+        $extensoes = ['jpg', 'jpeg', 'png', 'gif'];
+
+        foreach ($extensoes as $ext) {
+
+            $arquivoImagem = "imagens/usuarios/$id.$ext";
+
+            if (file_exists($arquivoImagem)) {
+                $imagem = $arquivoImagem;
+                break;
+            }
+        }
+
+        if ($imagem != "") {
+            echo "<img src='$imagem' height='80'><br><br>";
+        }
 
         ?>
 
-        <input type='file' name='arquivo'><br>
-        <input type='submit' value='Salvar'>
+        Nova imagem<br>
+        <input type="file"
+            name="arquivo"
+            accept="image/*">
+
+        <br><br>
+
+        <input type="submit" value="Salvar">
+
     </form>
 </body>
 
