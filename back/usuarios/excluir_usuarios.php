@@ -1,11 +1,11 @@
 <?php
 include ("../util.php");
     $conn = conecta();
-    $email = $_GET['email'];
-    $varSQL ="DELETE FROM usuarios WHERE email = :email";
+    $id = $_GET['id'];
+    $varSQL ="DELETE FROM usuarios WHERE id_usuario = :id_usuario";
     $delete = $conn->prepare($varSQL);
-    $delete->bindParam(':email', $email);
+    $delete->bindParam(':id_usuario', $id);
     $delete->execute();
 
-    header("Location: usuarios.php");
+    header("Location: usuarios.php");;
 ?>
