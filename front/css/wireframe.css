@@ -3,17 +3,7 @@
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
 
-:root {
-    --proto-bg: #090d16;
-    --proto-card: #111827;
-    --proto-border: #374151;
-    --proto-border-dashed: #4b5563;
-    --proto-accent: #60a5fa;
-    --proto-text: #e5e7eb;
-    --proto-text-muted: #9ca3af;
-    --proto-box-bg: rgba(31, 41, 55, 0.6);
-    --max-width: 1280px;
-}
+
 
 * {
     margin: 0;
@@ -21,309 +11,238 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-}
-
 body {
-    font-family: 'JetBrains Mono', monospace;
-    background-color: var(--proto-bg);
-    color: var(--proto-text);
-    line-height: 1.5;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
 }
 
 .container {
-    max-width: var(--max-width);
+    width: 92%;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 1rem;
-    width: 100%;
 }
 
-/* Anchor Target */
-#top {
-    scroll-margin-top: 100px;
-}
+/* caixa padrão do wireframe */
 
-/* Base Prototype Box */
 .proto-box {
-    background: var(--proto-box-bg);
-    border: 2px dashed var(--proto-border-dashed);
-    border-radius: 6px;
-    padding: 0.5rem 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #ffffff;
+    border: 2px solid #d0d0d0;
+    border-radius: 10px;
+    padding: 10px;
     text-align: center;
-    font-size: 0.78rem;
-    color: var(--proto-text);
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
+    font-size: 13px;
 }
 
 .proto-box.solid {
-    border-style: solid;
-    border-color: var(--proto-border);
+    border-color: #bfbfbf;
 }
 
 .proto-box.accent {
-    border-color: var(--proto-accent);
-    background: rgba(96, 165, 250, 0.08);
-    color: var(--proto-accent);
+    background-color: #eef6ff;
+    border-color: #90c2f7;
+    color: #3b82c4;
 }
 
 .proto-tag {
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--proto-accent);
-    background: rgba(96, 165, 250, 0.15);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid rgba(96, 165, 250, 0.3);
-    margin-bottom: 0.4rem;
+    color: #c2650f;
+    background-color: #fdf0e2;
+    padding: 3px 8px;
+    border-radius: 6px;
     display: inline-block;
-    white-space: nowrap;
+    margin-bottom: 5px;
 }
 
-/* Page Banner Indicator */
+/* topo indicando pagina */
+
 .proto-page-header {
-    background: #0f172a;
-    border-bottom: 1px solid var(--proto-border);
-    padding: 0.5rem 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 10px 0;
     text-align: center;
 }
 
 .proto-page-header h1 {
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: var(--proto-accent);
-    text-transform: uppercase;
+    font-size: 13px;
+    color: #c2650f;
 }
 
-/* HEADER FIXO EM UMA ÚNICA LINHA COMPACTA */
+/* cabeçalho */
+
 header.proto-header-sticky {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: rgba(17, 24, 39, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 2px solid var(--proto-border);
-    padding: 0.6rem 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    background-color: #ffffff;
+    border-bottom: 2px solid #e2e2e2;
+    padding: 10px 0;
+    text-align: center;
 }
 
 .proto-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.6rem;
-    width: 100%;
+    text-align: center;
 }
 
 .proto-logo-compact {
-    height: 38px;
-    font-weight: 700;
-    padding: 0 0.75rem;
-    flex-shrink: 0;
-}
-
-.proto-search-compact {
-    flex: 1 1 200px;
-    max-width: 320px;
-    height: 38px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    font-weight: bold;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
 }
 
 .proto-nav-group {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-wrap: nowrap;
+    margin-top: 8px;
 }
 
 .proto-btn-compact {
-    height: 38px;
-    padding: 0 0.6rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 3px;
+    border-radius: 8px;
 }
 
-/* Hero Section */
+/* banner */
+
 .proto-hero-section {
-    padding: 1.75rem 0;
+    padding: 25px 0;
 }
 
 .proto-hero-box {
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1.75rem 1rem;
-    border-width: 2px;
-    white-space: normal;
+    min-height: 260px;
+    padding: 25px 15px;
+    text-align: center;
+    border-radius: 14px;
+    background-color: #fdfaf3;
+    border-color: #f0dfb8;
 }
 
 .proto-hero-controls {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
+    margin-top: 10px;
 }
 
-/* Section Title Prototype */
+.proto-hero-controls .proto-box {
+    display: inline-block;
+    margin: 0 4px;
+}
+
+/* titulo de secao */
+
 .proto-section-title {
     text-align: center;
-    margin: 2rem 0 1.25rem 0;
-    padding: 0.6rem 0.85rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px dashed var(--proto-border-dashed);
-    white-space: normal;
+    margin: 25px 0 15px;
+    padding: 10px;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    background-color: #ffffff;
 }
 
-/* Products Grid Prototype */
+/* produtos - sem grid, com inline-block */
+
 .proto-products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    text-align: center;
 }
 
 .proto-product-card {
-    background: var(--proto-card);
-    border: 1px solid var(--proto-border);
-    padding: 1rem;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    margin: 1%;
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: left;
 }
 
 .proto-img-area {
     width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 4px;
-    font-weight: 700;
-    white-space: normal;
+    height: 150px;
+    font-weight: bold;
+    border-radius: 8px;
 }
 
-/* Differentials Grid */
+/* diferenciais */
+
 .proto-features-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    text-align: center;
 }
 
 .proto-feature-box {
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    white-space: normal;
-    padding: 0.85rem;
+    display: inline-block;
+    width: 22%;
+    margin: 1%;
+    vertical-align: top;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #f3f0fb;
+    border-color: #cdc2ec;
 }
 
-/* Video Frame */
+/* video */
+
 .proto-video-frame {
     width: 100%;
-    max-width: 800px;
-    height: 360px;
+    max-width: 750px;
+    height: 320px;
     margin: 0 auto;
-    white-space: normal;
+    border-radius: 12px;
 }
 
-/* Footer Prototype */
+/* rodape */
+
 footer.proto-footer {
-    background: #050811;
-    border-top: 2px solid var(--proto-border);
-    padding: 2.5rem 0 1.5rem 0;
-    margin-top: 3rem;
+    background-color: #ffffff;
+    border-top: 2px solid #e2e2e2;
+    padding: 30px 0 15px;
+    margin-top: 35px;
+    text-align: center;
 }
 
 .proto-footer-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
+    text-align: left;
 }
 
 .proto-footer-col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+    display: inline-block;
+    width: 22%;
+    vertical-align: top;
+    margin-right: 2%;
 }
 
-/* FLOATING SCROLL TOP BUTTON */
+/* botao de voltar ao topo */
+
 .proto-scroll-top-btn {
     position: fixed;
-    bottom: 1.25rem;
-    right: 1.25rem;
-    z-index: 999;
-    background: rgba(15, 23, 42, 0.95);
-    border: 2px solid var(--proto-accent);
-    color: var(--proto-accent);
-    padding: 0.5rem 0.85rem;
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    bottom: 18px;
+    right: 18px;
+    background-color: #e9f9f0;
+    border: 2px solid #7fd6a6;
+    color: #2e9e63;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
     text-decoration: none;
-    transition: all 0.2s ease;
 }
 
 .proto-scroll-top-btn:hover {
-    background: var(--proto-accent);
-    color: #090d16;
-    transform: translateY(-3px);
+    background-color: #7fd6a6;
+    color: #ffffff;
 }
 
-/* RESPONSIVIDADE MOBILE COMPACTA */
-@media (max-width: 992px) {
-    .proto-products-grid { grid-template-columns: repeat(2, 1fr); }
-    .proto-features-grid { grid-template-columns: repeat(2, 1fr); }
-    .proto-footer-grid { grid-template-columns: repeat(2, 1fr); }
-}
+/* telas menores */
 
-@media (max-width: 768px) {
-    .proto-header-row {
-        flex-wrap: wrap;
-    }
-    
-    .proto-search-compact {
-        order: 3;
-        max-width: 100%;
+@media (max-width: 700px) {
+    .proto-product-card, .proto-feature-box, .proto-footer-col {
         width: 100%;
-        flex: 1 1 100%;
+        margin: 5px 0;
     }
-    
-    .proto-nav-group {
-        overflow-x: auto;
-        padding-bottom: 0.25rem;
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 640px) {
-    .proto-products-grid { grid-template-columns: 1fr; }
-    .proto-features-grid { grid-template-columns: 1fr; }
-    .proto-footer-grid { grid-template-columns: 1fr; }
-    .proto-video-frame { height: 210px; }
 }
