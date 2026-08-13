@@ -20,7 +20,7 @@
         <input type="password" id="confirmaSenha" name="confirmaSenha" maxlength="255" required>
         <br><br>
 
-        Telefone <br>
+        Telefone <br>   
         <input type="text" name="telefone" maxlength="20">
         <br><br>
 
