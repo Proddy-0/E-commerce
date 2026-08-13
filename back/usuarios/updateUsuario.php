@@ -1,25 +1,46 @@
 <?php
     include "../util.php";
     $conn = conecta();
-    $varSQL = "UPDATE usuarios SET
-               nome = :nome,
+    
+$id = $_POST['id_usuario'];
+$nome = $_POST['nome'];
+$email = $_POST['email'];
+$telefone = $_POST['telefone'];
+
+$varSQL = "UPDATE usuarios
+           SET nome = :nome,
                email = :email,
                telefone = :telefone
-               WHERE id_usuario = :id_usuario";
-    $update = $conn->prepare($varSQL);
-    $update->bindParam(':nome', $_POST['nome']);
-    $update->bindParam(':email', $_POST['email']);
-    $update->bindParam(':telefone', $_POST['telefone']);
-    $update->bindParam(':id_usuario', $_POST['id_usuario']);
-    if ($update->execute()) {
-        if (!empty($_FILES['imagem']['name'])) {
-            salvaUpload(
-                $_POST['id_usuario'],
-                "imagens/usuarios",
-                $_FILES,
-                'imagem'
-            );
-        }
+           WHERE id_usuario = :id_usuario";
+
+$update = $conn->prepare($varSQL);
+
+$update->bindParam(':nome', $nome);
+$update->bindParam(':email', $email);
+$update->bindParam(':telefone', $telefone);
+$update->bindParam(':id_usuario', $id);
+
+if ($update->execute()) {
+
+    // Se o usuário escolheu uma nova imagem
+    if (!empty($_FILES['arquivo']['name'])) {
+
+        salvaUpload(
+            $id,
+            "imagens/usuarios",
+            $_FILES,
+            'arquivo'
+        );
     }
-    header("Location: usuarios.php");
+
+    
+
+    header("Refresh: 1; URL=usuarios.php");
+    exit;
+
+} else {
+
+    echo "Erro ao alterar o usuário.";
+}
+
 ?>
