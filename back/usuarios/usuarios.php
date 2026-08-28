@@ -1,73 +1,100 @@
 <html>
-
 <body>
     <form action="" method="POST">
         Nome:<br>
-        <input type="text" name="nome">
+        <input
+            type="text"
+            name="nome"
+            value="<?= isset($_POST['nome']) ? htmlspecialchars($_POST['nome']) : '' ?>"
+        >
         <input type="submit" value="Filtrar">
     </form>
-
-    <?php
-    // se $_POST nao existe, sai fora !
-
+<?php
     include "../util.php";
-
-    $conn = conecta();  // pra usar no ecommerce
-    $id = $_SESSION['id'];
-    if (isset($_POST['nome']) and $_POST['nome'] <> "") {
-        $varSQL = " SELECT * FROM usuarios
-                        where nome LIKE :paramNome
-                        order by nome";
+    $conn = conecta();
+    if (isset($_POST['nome']) && $_POST['nome'] != "") { 
+        $varSQL = "
+            SELECT *
+            FROM usuario
+            WHERE nome ILIKE :paramNome
+            AND excluido = false
+            ORDER BY nome";
         $select = $conn->prepare($varSQL);
-        $select->bindParam(":paramNome", $_POST['nome']);
+        $nomeFiltro = "%" . $_POST['nome'] . "%";
+        $select->bindParam(
+            ":paramNome",
+            $nomeFiltro);
         $select->execute();
     } else {
-        $varSQL = " SELECT * FROM usuarios
-                        order by nome";
+        $varSQL = "
+            SELECT *
+            FROM usuario
+            WHERE excluido = false
+            ORDER BY nome";
         $select = $conn->query($varSQL);
     }
-
-
-    echo "<table border=1'>
-                <tr>
-                    <td>Nome</td>
-                    <td>Email</td>
-                    <td>Telefone</td>
-                    <td>Foto</td>
-                    <td></td><td></td>
-                </tr>";
-
-    while ($linha = $select->fetch()) {
-        $nome    = $linha['nome'];
-        $email = $linha['email'];
-        $telefone     = $linha['telefone'];
-        $nomeArquivo = "imagens/usuarios/$email.jpg";
-        if (!file_exists($nomeArquivo)) {
-            $nomeArquivo = "imagens/semnome.jpg";
+    echo "
+    <table border='1'>
+        <tr>
+            <td>Nome</td>
+            <td>Email</td>
+            <td>Telefone</td>
+            <td>Foto</td>
+            <td>Alterar</td>
+            <td>Excluir</td>
+        </tr>
+    ";
+    while ($linha = $select->fetch(PDO::FETCH_ASSOC)) {
+        $id = $linha['id_usuario'];
+        $nome = htmlspecialchars($linha['nome']);
+        $email = htmlspecialchars($linha['email']);
+        $telefone = htmlspecialchars($linha['telefone']);
+        // Procura a imagem pelo ID
+        $imagem = "";
+        $extensoes = ['jpg', 'jpeg', 'png', 'gif'];
+        foreach ($extensoes as $ext) {
+            $arquivoImagem = "imagens/usuarios/$id.$ext";
+            if (file_exists($arquivoImagem)) {
+                $imagem = $arquivoImagem;
+                break;
+            }
+        }
+        if ($imagem == "") {
+            $imagem = "imagens/semnome.jpg";
         }
         echo "
-                <tr>
-                    <td>$nome</td>
-                    <td>$email</td>
-                    <td>$telefone</td>
-                    <td>
-                    <img src='$nomeArquivo' height=40>
-                    </td>
-                    <td>
-                        <a href='alterar_usuarios.php?id=$id'>Alterar</a>
-                    </td>
-                    <td>
-                        <a href='excluir_usuarios.php?id=$id'>Excluir</a>
-                    </td>
-                </tr>";
+        <tr>
+            <td>$nome</td>
+            <td>$email</td>
+            <td>$telefone</td>
+            <td>
+                <img
+                    src='$imagem'
+                    height='40'
+                >
+            </td>
+            <td>
+                <a href='alterar_usuario.php?id=$id'>
+                    Alterar
+                </a>
+            </td>
+            <td>
+                <a
+                    href='excluir_usuarios.php?id=$id'
+                    onclick=\"return confirm('Deseja excluir este usuário?')\">
+                    Excluir
+                </a>
+            </td>
+        </tr>
+        ";
     }
-
-    echo "</table>
-              <a href='adicionarUsuario.php'>
-                 Adicionar</center>
-              </a>";
-
-    ?>
+    echo "
+    </table>
+    <br>
+    <a href='adicionarUsuario.php'>
+        Adicionar usuário
+    </a>
+    ";
+?>
 </body>
-
 </html>

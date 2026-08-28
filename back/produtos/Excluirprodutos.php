@@ -3,14 +3,14 @@
     $conn = conecta();
     $id = $_GET['id'];
     $varSQL = "
-        UPDATE usuario
+        UPDATE produto
         SET
             excluido = true,
             data_exclusao = CURRENT_TIMESTAMP
-        WHERE id_usuario = :id";
+        WHERE id_produto = :id";
     $delete = $conn->prepare($varSQL);
-    $delete->bindParam(':id', $id);
+    $delete->bindParam(':id',$id);
     $delete->execute();
-    header("Location: usuarios.php");
+    header("Location: listaprodutos.php");
     exit;
 ?>
