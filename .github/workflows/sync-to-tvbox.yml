@@ -1,0 +1,43 @@
+name: Sincronizar com TV Box Hub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout E-commerce
+        uses: actions/checkout@v4
+        with:
+          path: ecommerce-src
+
+      - name: Checkout TV Box Hub
+        uses: actions/checkout@v4
+        with:
+          repository: Proddy-0/labs-tvbox
+          token: ${{ secrets.SYNC_TOKEN }}
+          path: tvbox-hub
+
+      - name: Sincronizar arquivos para a pasta /ecommerce no Hub
+        run: |
+          mkdir -p tvbox-hub/ecommerce
+          rm -rf tvbox-hub/ecommerce/*
+          rsync -av --exclude='.git' --exclude='.github' ecommerce-src/ tvbox-hub/ecommerce/
+
+      - name: Commit e Push no TV Box Hub
+        run: |
+          cd tvbox-hub
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add ecommerce/
+          
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Auto-sync: update ecommerce from Proddy-0/E-commerce@${{ github.sha }}"
+            git push origin main
+          else
+            echo "Nenhuma alteracao para commitar."
+          fi
