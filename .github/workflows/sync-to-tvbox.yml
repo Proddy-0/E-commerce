@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -20,6 +21,7 @@ jobs:
           repository: Proddy-0/labs-tvbox
           token: ${{ secrets.SYNC_TOKEN }}
           path: tvbox-hub
+          persist-credentials: false
 
       - name: Sincronizar arquivos para a pasta /ecommerce no Hub
         run: |
@@ -28,10 +30,15 @@ jobs:
           rsync -av --exclude='.git' --exclude='.github' ecommerce-src/ tvbox-hub/ecommerce/
 
       - name: Commit e Push no TV Box Hub
+        env:
+          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
           cd tvbox-hub
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Configura autenticacao explicita para o push
+          git remote set-url origin https://x-access-token:${SYNC_TOKEN}@github.com/Proddy-0/labs-tvbox.git
           
           git add ecommerce/
           
