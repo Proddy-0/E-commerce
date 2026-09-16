@@ -2,9 +2,12 @@ name: Sincronizar com TV Box Hub
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
+
+concurrency:
+  group: sync-tvbox
+  cancel-in-progress: true
 
 jobs:
   sync:
@@ -21,30 +24,26 @@ jobs:
           repository: Proddy-0/labs-tvbox
           token: ${{ secrets.SYNC_TOKEN }}
           path: tvbox-hub
-          persist-credentials: false
 
       - name: Sincronizar arquivos para a pasta /ecommerce no Hub
         run: |
+          set -euo pipefail
           mkdir -p tvbox-hub/ecommerce
-          rm -rf tvbox-hub/ecommerce/*
-          rsync -av --exclude='.git' --exclude='.github' ecommerce-src/ tvbox-hub/ecommerce/
+          rsync -av --delete \
+            --exclude='.git' --exclude='.github' \
+            ecommerce-src/ tvbox-hub/ecommerce/
 
       - name: Commit e Push no TV Box Hub
-        env:
-          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        working-directory: tvbox-hub
         run: |
-          cd tvbox-hub
-          git config user.name "github-actions[bot]"
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Configura autenticacao explicita para o push
-          git remote set-url origin https://x-access-token:${SYNC_TOKEN}@github.com/Proddy-0/labs-tvbox.git
-          
-          git add ecommerce/
-          
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "Auto-sync: update ecommerce from Proddy-0/E-commerce@${{ github.sha }}"
-            git push origin main
-          else
+          git add -A ecommerce/
+          if git diff --cached --quiet; then
             echo "Nenhuma alteracao para commitar."
+            exit 0
           fi
+          git commit -m "Auto-sync: update ecommerce from Proddy-0/E-commerce@${{ github.sha }}"
+          git pull --rebase origin main
+          git push origin main
