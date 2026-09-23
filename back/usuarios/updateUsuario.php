@@ -1,6 +1,6 @@
 <?php
     include "../util.php";
-    include "verificaAdmin.php";
+    include "verificaAdm.php";
     $conn = conecta();
     $id = $_POST['id_usuario'];
     $nome = $_POST['nome'];
