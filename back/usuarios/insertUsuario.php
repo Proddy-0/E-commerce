@@ -69,7 +69,7 @@
                 'imagem');
         }
         if ($doSite) {
-            // loga o usuário automaticamente após o cadastro pelo site
+            // loga o usuário automaticamente após o cadastro pelo site   
             session_regenerate_id(true);
             $_SESSION['id_usuario'] = $id;
             $_SESSION['nome'] = $nome;
